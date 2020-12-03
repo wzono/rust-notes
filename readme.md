@@ -43,7 +43,7 @@ fn dangle() -> &String { // dangle 返回一个字符串的引用
 
 13. 使用元组包装迭代器结果： `s.as_bytes().iter().enumerate()`
 
-14. `slice` 也是一种引用，类型是 `&str`，直接硬编码创建的字符串字面量也是 `slice`，
+14. `slice` 也是一种引用，类型是 `&str`，直接硬编码创建的字符串字面量也是 `slice`，可以使用 `&s[1..5]` 方式取 `String 或 &String` 的 `slice`
 
 
 ### Confusion
