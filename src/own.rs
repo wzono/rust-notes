@@ -14,6 +14,11 @@
 
 pub fn start() {
 
+  let x = 0;
+  let y = x;
+
+  println!("{}", y);
+
   // 可行
   let mut a = String::from("123");
 
@@ -49,7 +54,11 @@ pub fn start() {
 
   let s = "Love and Peace";
 
-  let word = first_word(&s[..]);
+  let word = first_word(s);
+
+  // let z = [1,2,3];
+
+  // let slice = &z[1..];
 
   println!("{}", s);
 
