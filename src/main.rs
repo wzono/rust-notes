@@ -2,6 +2,7 @@ use std::env;
 mod fibonacci;
 mod temperature_convert;
 mod own;
+mod struct_test;
 
 fn main() {
   let args = env::args().collect::<Vec<String>>();
@@ -18,6 +19,7 @@ fn main() {
     1 => fibonacci::start(),
     2 => temperature_convert::start(),
     3 => own::start(),
+    4 => struct_test::start(),
     _ => println!("[warn] give a right key for note start.")
   }
 }
