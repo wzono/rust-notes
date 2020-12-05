@@ -19,6 +19,8 @@ use std::env;
 /// 几个疑问
 /// 1. 为什么 map 在判断key存在/获取值 时需要使用 & 来取引用，而在插入时又不需要
 /// 
+/// update: 因为 Map 的 Key 类型不一定是基本类型，如果不使用 & 来取引用，很可能会产生 Move 行为导致所有权转移，而之后又可能会用到这个 key。（从注释中可以得知 The key may be any borrowed form of the map's key type, but the ordering on the borrowed form must match the ordering on the key type.）
+/// 而为什么 insert 不使用引用呢？我猜测是他在设计之初猜测了用户行为，认为 key 的最终使用就是用来 insert ，因此直接产生 Move 行为
 /// 
 
 pub fn start() {
@@ -33,7 +35,7 @@ pub fn start() {
 fn f(n: usize, map: &mut BTreeMap<usize, usize>) -> usize {
   
   if map.contains_key(&n) {
-    return *map.get(&n).unwrap();
+    return *(map.get(&n).unwrap());
   }
 
   let c = match n {
