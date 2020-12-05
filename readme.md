@@ -83,43 +83,43 @@ println!("{}", e); // 为什么仍然可以使用？
 
 2. 与 ES6 一样，在 Rust 的结构体中，当变量名和字段名同名时，可以直接使用名称简写
 
-    ```js
-    let username = "549";
-    let obj = {
-      username,
-    };
-    ```
+   ```js
+   let username = "549";
+   let obj = {
+     username,
+   };
+   ```
 
-    ```rust
-    let username = '549';
-    let user = User {
-      username,
-    }
-    ```
+   ```rust
+   let username = '549';
+   let user = User {
+     username,
+   }
+   ```
 
 3. 在 Rust 中也有类似 ES6 的拓展运算符，但作用优先级不一样
 
-    ```rust
-    let user1 = User {
-      name: "549",
-      age: 18
-    }
+   ```rust
+   let user1 = User {
+     name: "549",
+     age: 18
+   }
 
-    let user2 = User {
-      name: "wingsico",
-      ..user1, // 重用 user1 中的 age，但不覆盖 name
-    }
+   let user2 = User {
+     name: "wingsico",
+     ..user1, // 重用 user1 中的 age，但不覆盖 name
+   }
 
-    user2.name // "wingsico"
-    user2.age // 18
-    ```
+   user2.name // "wingsico"
+   user2.age // 18
+   ```
 
 4. 元组结构体：命名的元组，不同命名的元组隶属于不同的类型。（但总觉得这样带来了额外的理解成本，但也有好处，就是可以使用模式匹配/索引来取值）
 
-    ```rust
-    struct Point(i32, i32, i32);
-    struct Color(i32, i32, i32);
-    ```
+   ```rust
+   struct Point(i32, i32, i32);
+   struct Color(i32, i32, i32);
+   ```
 
 5. 结构体中可以使用被其他对象所拥有的数据的引用，但往往我们希望结构体的有效性与其数据的有效性保持一致（_当使用引用时，可能存在不一致的情况_），Rust 针对这种情况，使用了 **生命周期**，生命周期可以确保结构体引用的数据有效性跟结构体本身保持一致。若在结构体中使用引用而不指定声明周期，Rust 会拒绝通过编译来保证一致性。
 
@@ -129,8 +129,38 @@ println!("{}", e); // 为什么仍然可以使用？
 
 1. 类单元结构体具体描述在 第五章并没有讲到，但翻阅一些源码中看到类似的写法：
 
-```rust
-struct Demo(());
-```
+   ```rust
+   struct Demo(());
+   ```
 
 有点类似元组结构体，但没有任何参数，不确定是不是类单元结构体，_待更新_
+
+## 20201205
+
+### Knowledge Points
+
+1.  `*`, `&` 优先级低于 `.`, `()`
+
+2.  相比于 C++，Rust 没有类似 `->` 的运算符来直接去调用对象上的方法，例如 `object->something()`，此处 object 是一个指针，something 是该指针指向的对象的方法。在 Rust 中，我们可以直接使用 `object.something()`，因为 Rust 在调用方法时会自动帮我们进行 **加引用或解引用**。这里就要解释一下为什么 Rust 可以完成这种 **自动引用**，这是因为在定义结构体方法时，是通过如下方式定义的：
+
+    ```rust
+    struct User {
+      name: String,
+    }
+
+    impl User {
+      pub fn print_name(&self) {
+        println!("{}", self.name);
+      }
+    }
+    ```
+    这种方式在定义第一个参数（*第一个参数一定是指向结构体的实例的*）时已经指定了使用实例的方式（`&self` 不可变引用， `&mut self` 可变引用，`self` 获取所有权），那么在调用时就无需手动去加引用或解引用来匹配类型（当然我们也可以手动进行类型匹配，但完全没有必要，Rust 已经帮我自动做了）
+
+3. 结构体实例的某个属性若被获取了所有权，被称为该结构体被部分地获取了所有权。因此该结构体的所有权相当于被分割了，若想使用整个结构体则编译不通过，只能部分地使用未被获取所有权的属性。
+
+4. 如果我们故意不想使用某个结构体方法的话，可以使用 `_` 作为方法前缀，这样可以让 Rust 编译器了解你的意图，同意编译通过。同样，对于一些测试或兜底函数，参数仅仅用来测试，在函数内也不会使用，那么也可以使用 `_` 开头作为参数名，让代码可以成功编译，例如下面的函数：
+
+    ```rust
+    fn noop(_u: User) {}
+    ```
+### Confusion
