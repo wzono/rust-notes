@@ -3,6 +3,8 @@ mod fibonacci;
 mod temperature_convert;
 mod own;
 mod struct_test;
+mod enum_test;
+mod match_test;
 
 fn main() {
   let args = env::args().collect::<Vec<String>>();
@@ -20,6 +22,8 @@ fn main() {
     2 => temperature_convert::start(),
     3 => own::start(),
     4 => struct_test::start(),
+    5 => enum_test::start(),
+    6 => match_test::start(),
     _ => println!("[warn] give a right key for note start.")
   }
 }
