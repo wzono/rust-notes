@@ -1,20 +1,15 @@
-use std::env;
-mod fibonacci;
-mod temperature_convert;
-mod own;
-mod struct_test;
-mod enum_test;
-mod match_test;
+mod modules;
 
+use crate::modules::*;
+
+use std::env;
 fn main() {
   let args = env::args().collect::<Vec<String>>();
 
   if args.len() < 2 {
-    return println!("[error] no key was given.")
+    return println!("[error] no key was given.");
   }
 
-
-  
   let note_key = args[1].parse::<usize>().unwrap();
 
   match note_key {
@@ -24,6 +19,7 @@ fn main() {
     4 => struct_test::start(),
     5 => enum_test::start(),
     6 => match_test::start(),
-    _ => println!("[warn] give a right key for note start.")
+    7 => module_test::start(),
+    _ => println!("[warn] give a right key for note start."),
   }
 }
