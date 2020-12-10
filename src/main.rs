@@ -20,6 +20,7 @@ fn main() {
     5 => enum_test::start(),
     6 => match_test::start(),
     7 => module_test::start(),
+    8 => vector_test::start(),
     _ => println!("[warn] give a right key for note start."),
   }
 }
