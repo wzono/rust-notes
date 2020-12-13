@@ -39,4 +39,51 @@ pub fn start() {
 
   // now string3, string4 and string5 had dropped...
   // println!("{}", string3); painc
+
+  // loop for vec
+
+  let mut vec3 = vec![1, 2, 3, 4, 5];
+
+  for i in &mut vec3 {
+    *i += 30;
+  }
+
+  println!("{:#?}", vec3);
+
+
+  // borrow here for loop
+  let string6 = String::from("hahah");
+  let string7 = String::from("ggag");
+
+  let mut vec4 = vec![string6, string7];
+
+  for i in &mut vec4 {
+    i.make_ascii_uppercase();
+  }
+  println!("{:#?}", vec4);
+
+
+  // diffrent type vec
+  #[derive(Debug)]
+  enum TableRowValue {
+    Float(f32),
+    Text(String),
+    Int(i32),
+  }
+
+  let vec5: Vec<TableRowValue> = vec![TableRowValue::Float(5.0), TableRowValue::Int(4), TableRowValue::Text(String::from("hahahah"))];
+
+  for i in vec5 {
+    // 取值方式一
+    if let TableRowValue::Float(f) = i {
+      println!("{}", f);
+    }
+
+    // 取值方式二
+    match i {
+      TableRowValue::Float(f) => println!("{}", f),
+      TableRowValue::Text(t) => println!("{}", t),
+      TableRowValue::Int(i) => println!("{}", i),
+    }
+  }
 }
