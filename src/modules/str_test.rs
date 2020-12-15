@@ -1,6 +1,7 @@
 pub fn start() {
   test_initial();
   test_update();
+  test_multi_char();
 }
 
 
@@ -37,5 +38,12 @@ fn test_update() {
   let s3 = s1 + &s2;
 
   println!("{}, {}", s2, s3);
+}
 
+
+fn test_multi_char() {
+  let s = "🏷";
+  println!("{}", s.len());
+
+  println!("{:#?}", s.as_bytes());
 }
