@@ -9,6 +9,7 @@
   5. Rust 的模块机制 [notes-20201208](./docs/20201208.md)
   6. Rust 的 Vector 定义与使用 [notes-20201210](./docs/20201210.md)
   7. Rust 的 字符串 [notes-20201214](./docs/20201214.md)
+  8. Rust 的 HashMap [notes-20201228](./docs/20201228.md)
 ## 说明
 
 这个仓库只是用来记录我阅读 Rust 圣经中的所思所想，并不代表完全正确。

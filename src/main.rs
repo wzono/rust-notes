@@ -22,6 +22,7 @@ fn main() {
     7 => module_test::start(),
     8 => vector_test::start(),
     9 => str_test::start(),
+    10 => hashmap_test::start(),
     _ => println!("[warn] give a right key for note start."),
   }
 }

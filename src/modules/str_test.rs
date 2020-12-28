@@ -35,9 +35,18 @@ fn test_update() {
   let s2 = "world!".to_string();
 
   // s1 被移动了
+  // &s2 类型为 &String ，被强转(coerced) 为 &str
+  // 解引用强制多态
   let s3 = s1 + &s2;
 
+
   println!("{}, {}", s2, s3);
+
+  let s4 = "Hello,".to_string();
+
+  let s5 = format!("{}, {}", s4, s2); // 不转移所有权
+
+  println!("{}, {}, {}", s4, s2, s5);
 }
 
 
