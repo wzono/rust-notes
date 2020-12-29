@@ -9,4 +9,4 @@ pub mod module_test;
 pub mod vector_test;
 pub mod str_test;
 pub mod hashmap_test;
-
+pub mod collection_test;
